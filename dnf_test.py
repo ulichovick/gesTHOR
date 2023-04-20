@@ -7,7 +7,9 @@ def query_local_packages(filtr):
     i = q.installed()
     print(filtr)
     if filtr:
-        i = i.filter(name=filtr)    
+        i = i.filter(name=filtr)
+    else:
+        i = i.filter(name="dnf")
     packages = list(i)  # i only gets evaluated here
     print("Installed dnf package:")
     r = q.run()
@@ -22,10 +24,13 @@ def query_available_packages(filtr):
     i = q.available()
     print(filtr)
     if filtr:
-        i = i.filter(name=filtr)    
+        i = i.filter(name=filtr)
+    else:
+        i = i.filter(name="dnf")   
     packages = list(i)  # i only gets evaluated here
     print("Available dnf package:")
     r = q.run()
+    print(packages)
     return packages
 
 if __name__ == "__main__":
