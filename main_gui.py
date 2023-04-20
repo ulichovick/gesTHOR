@@ -53,6 +53,12 @@ class Aplicacion(object):
     def locales(self):
         self.i = 1
         self.j = 0.2
+        if self.c:
+            self.resultados.destroy()    
+            self.resultados = ttk.Frame(self.pestana_instalados, relief="solid", width=495, height=400)
+            self.resultados.grid(column=0,row=1)
+            self.label_resultados = ttk.Label(self.resultados, text="Resultados: ", font=("Liberation Serif",20))
+            self.label_resultados.place(relx=0.5, rely=0.1, anchor="center")
         self.packages = query_local_packages(str(self.filtro.get()))
         print(self.packages)
         if self.packages:
@@ -66,15 +72,21 @@ class Aplicacion(object):
             self.texto.insert(tk.END,f"El paquete no se encuentra instalado \n")
 
     def linea(self):
-        self.i = 1
-        self.j = 0.2
+        self.k = 1
+        self.l = 0.2
+        if self.c:
+            self.resultados_linea.destroy()
+            self.resultados_linea = ttk.Frame(self.pestana_disponibles, relief="solid", width=495, height=400)
+            self.resultados_linea.grid(column=0,row=1)
+            self.label_resultados_linea = ttk.Label(self.resultados_linea, text="Resultados: ", font=("Liberation Serif",20))
+            self.label_resultados_linea.place(relx=0.5, rely=0.1, anchor="center")
         self.packages = query_available_packages(str(self.filtro_linea.get()))
         if self.packages:
             for pkg in self.packages:
-                self.c[self.i] = ttk.Checkbutton(self.resultados_linea, text = str(pkg), variable=str(pkg))
-                self.c[self.i].place(relx=0.5, rely=self.j, anchor="e")
-                self.i = self.i + 1
-                self.j = self.j + 0.1
+                self.c[self.k] = ttk.Checkbutton(self.resultados_linea, text = str(pkg), variable=str(pkg))
+                self.c[self.k].place(relx=0.5, rely=self.l, anchor="e")
+                self.k = self.k + 1
+                self.l = self.l + 0.1
         else:
             self.texto.insert(tk.END,f"No es posible encontrar el paquete \n")
 
