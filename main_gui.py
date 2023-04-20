@@ -22,8 +22,12 @@ class Aplicacion(object):
 
         self.boton_locales = ttk.Button(self.busqueda, width=10, text="Buscar", command=self.locales)
         self.boton_locales.place(relx=0.5, rely=0.5, anchor="center")
+
+        
         self.resultados = ttk.Frame(self.pestana_instalados, relief="solid", width=495, height=400)
         self.resultados.grid(column=0,row=1)
+        self.label_resultados = ttk.Label(self.resultados, text="Resultados: ", font=("Liberation Serif",20))
+        self.label_resultados.place(relx=0.5, rely=0.1, anchor="center")
 
         self.pestana_disponibles = ttk.Frame(self.cuaderno, relief="solid")
         self.cuaderno.add(self.pestana_disponibles, text="Explorar")
@@ -37,32 +41,40 @@ class Aplicacion(object):
 
         self.boton_locales = ttk.Button(self.busqueda, width=10, text="Buscar", command=self.linea)
         self.boton_locales.place(relx=0.5, rely=0.5, anchor="center")
+        
         self.resultados_linea = ttk.Frame(self.pestana_disponibles, relief="solid", width=495, height=400)
         self.resultados_linea.grid(column=0,row=1)
+        self.label_resultados_linea = ttk.Label(self.resultados_linea, text="Resultados: ", font=("Liberation Serif",20))
+        self.label_resultados_linea.place(relx=0.5, rely=0.1, anchor="center")
 
         self.cuaderno.grid(column=0, row=0)
         self.window.mainloop()
 
     def locales(self):
         self.i = 1
+        self.j = 0.2
         self.packages = query_local_packages(str(self.filtro.get()))
         print(self.packages)
         if self.packages:
             for pkg in self.packages:
                 self.c[self.i] = ttk.Checkbutton(self.resultados, text = str(pkg), variable=str(pkg))
-                self.c[self.i].pack()
+                self.c[self.i].place(relx=0.5, rely=self.j, anchor="e")
                 self.i = self.i + 1
+                self.j = self.j + 0.1
+
         else:
             self.texto.insert(tk.END,f"El paquete no se encuentra instalado \n")
 
     def linea(self):
         self.i = 1
+        self.j = 0.2
         self.packages = query_available_packages(str(self.filtro_linea.get()))
         if self.packages:
             for pkg in self.packages:
                 self.c[self.i] = ttk.Checkbutton(self.resultados_linea, text = str(pkg), variable=str(pkg))
-                self.c[self.i].pack()
+                self.c[self.i].place(relx=0.5, rely=self.j, anchor="e")
                 self.i = self.i + 1
+                self.j = self.j + 0.1
         else:
             self.texto.insert(tk.END,f"No es posible encontrar el paquete \n")
 
