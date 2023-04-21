@@ -12,7 +12,6 @@ class Handler:
     def onButtonAvailablePressed(self, button):
         res_avail.clear()
         available_filters = available_filter.get_text()
-        print(available_filters)
         available_spinner.start()
         available_data = query_available_packages(available_filters)
         for pkg in available_data:
@@ -22,10 +21,11 @@ class Handler:
     def onButtonInstalledPressed(self, button):
         res_install.clear()
         installed_filters = installed_filter.get_text()
-        print(installed_filters)
+        installed_spinner.start()
         installed_data = query_local_packages(installed_filters)
         for pkg in installed_data:
             res_install.append([str(pkg)])
+        installed_spinner.stop()
 
 builder = Gtk.Builder()
 builder.add_from_file("test.glade")
@@ -35,6 +35,7 @@ window = builder.get_object("window")
 installed_filter = builder.get_object("installed_filter")
 available_filter = builder.get_object("available_filter")
 available_spinner = builder.get_object("available_spinner")
+installed_spinner = builder.get_object("installed_spinner")
 res_install = builder.get_object("resultados_installe")
 res_avail = builder.get_object("resultados_availabl")
 
