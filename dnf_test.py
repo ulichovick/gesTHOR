@@ -1,4 +1,12 @@
 import dnf
+import queue
+
+my_queue = queue.Queue()
+
+def store_in_queue(f):
+    def wrapper(*args):
+        my_queue.put(f(*args))
+    return wrapper
 
 def query_local_packages(filtr):
     base = dnf.Base()
@@ -16,13 +24,13 @@ def query_local_packages(filtr):
     print(packages)
     return packages
 
+@store_in_queue
 def query_available_packages(filtr):
     base = dnf.Base()
     base.read_all_repos()
     base.fill_sack()
     q = base.sack.query()
     i = q.available()
-    print(filtr)
     if filtr:
         i = i.filter(name=filtr)
     else:

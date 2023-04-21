@@ -1,23 +1,34 @@
 import gi
-from dnf_test import query_local_packages, query_available_packages
-
+from threading import Thread
+from dnf_test import query_local_packages, query_available_packages, my_queue
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, GLib
 
 
 class Handler:
     def onDestroy(self, *args):
         Gtk.main_quit()
 
+    def spin(self):
+        available_spinner.start()
+        return False
+
+    def another_thread(self):
+        available_filters = available_filter.get_text()
+        GLib.idle_add(self.spin)
+        self.data = query_available_packages(available_filters)
+        self.pkgs = my_queue.get()
+        available_spinner.stop()
+        for pkg in self.pkgs:
+            res_avail.append([str(pkg)])
+        return self.data
+
     def onButtonAvailablePressed(self, button):
         res_avail.clear()
-        available_filters = available_filter.get_text()
-        available_spinner.start()
-        available_data = query_available_packages(available_filters)
-        for pkg in available_data:
-            res_avail.append([str(pkg)])
-        available_spinner.stop()
-    
+        thread = Thread(target=self.another_thread)
+        thread.daemon = True
+        thread.start()
+
     def onButtonInstalledPressed(self, button):
         res_install.clear()
         installed_filters = installed_filter.get_text()
