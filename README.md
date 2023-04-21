@@ -1,2 +1,2 @@
 # gesTHOR
-gestor cutre de apps usando DNF(?
+Una GUI cutre para DNF(?
