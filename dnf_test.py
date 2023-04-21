@@ -16,8 +16,8 @@ def query_local_packages(filtr):
     print(filtr)
     if filtr:
         i = i.filter(name=filtr)
-    else:
-        i = i.filter(name="dnf")
+    #else:
+    #    i = i.filter(name="dnf")
     packages = list(i)  # i only gets evaluated here
     print("Installed dnf package:")
     r = q.run()
