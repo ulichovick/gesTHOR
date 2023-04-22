@@ -2,12 +2,6 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkListStore" id="resultados_avail_ins">
-    <columns>
-      <!-- column-name package to install -->
-      <column type="gchararray"/>
-    </columns>
-  </object>
   <object class="GtkListStore" id="resultados_availabl">
     <columns>
       <!-- column-name Nombre -->
@@ -107,98 +101,27 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkTreeView" id="resultados_available">
+                    <property name="height-request">220</property>
                     <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <object class="GtkTreeView" id="resultados_avail">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="model">resultados_availabl</property>
-                            <signal name="selection-get" handler="on_tree_selection_changed" swapped="no"/>
-                            <child internal-child="selection">
-                              <object class="GtkTreeSelection">
-                                <property name="mode">multiple</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkTreeViewColumn" id="Available_package">
-                                <property name="title" translatable="yes">Disponible</property>
-                                <child>
-                                  <object class="GtkCellRendererCombo" id="available_vals"/>
-                                  <attributes>
-                                    <attribute name="text">0</attribute>
-                                    <attribute name="model">0</attribute>
-                                  </attributes>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
+                    <property name="can-focus">True</property>
+                    <property name="model">resultados_availabl</property>
+                    <property name="enable-grid-lines">horizontal</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection" id="resultados_installed_chil">
+                        <property name="mode">multiple</property>
                       </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
                     </child>
                     <child>
-                      <object class="GtkBox" id="avail_to_install">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="orientation">vertical</property>
+                      <object class="GtkTreeViewColumn" id="available_package">
+                        <property name="title" translatable="yes">Nombre</property>
                         <child>
-                          <object class="GtkTreeView" id="resultados_avail_install">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="model">resultados_avail_ins</property>
-                            <property name="search-column">0</property>
-                            <child internal-child="selection">
-                              <object class="GtkTreeSelection">
-                                <property name="mode">multiple</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkTreeViewColumn" id="Available_package_to_install">
-                                <property name="title" translatable="yes">A instalar</property>
-                                <child>
-                                  <object class="GtkCellRendererCombo" id="to_install"/>
-                                  <attributes>
-                                    <attribute name="text">0</attribute>
-                                    <attribute name="model">0</attribute>
-                                  </attributes>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
+                          <object class="GtkCellRendererText" id="available_vals"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
                         </child>
                       </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
                     </child>
                   </object>
                   <packing>
@@ -208,36 +131,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkButton" id="install_available">
+                    <property name="label" translatable="yes">Instalar</property>
                     <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <child>
-                      <object class="GtkButton" id="install_available">
-                        <property name="label" translatable="yes">Agregar</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="receives-default">True</property>
-                        <signal name="pressed" handler="pressedInstall" swapped="no"/>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="Install_available">
-                        <property name="label" translatable="yes">Instalar(TBD)</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="receives-default">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <signal name="pressed" handler="pressedInstall" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -350,7 +249,7 @@
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>

@@ -38,6 +38,22 @@ class Handler:
             res_install.append([str(pkg)])
         installed_spinner.stop()
 
+
+    def pressedInstall(self, button):
+        to_install_pkg = results_avail.get_selection()
+        to_install_pkg.connect('changed', self.on_tree_selection_changed)
+        (model, pathlist) =  to_install_pkg.get_selected_rows()
+        for path in pathlist :
+            tree_iter = model.get_iter(path)
+            print("to install", model.get_iter(path))
+            to_install.append([str(model.get_value(tree_iter,0))])
+
+    def on_tree_selection_changed(self, selection):
+        model, treeiter = selection.get_selected()
+        if treeiter != None:
+            print ("You selected", model[treeiter][0])
+        
+
 builder = Gtk.Builder()
 builder.add_from_file("test.glade")
 builder.connect_signals(Handler())
@@ -48,7 +64,9 @@ available_filter = builder.get_object("available_filter")
 available_spinner = builder.get_object("available_spinner")
 installed_spinner = builder.get_object("installed_spinner")
 res_install = builder.get_object("resultados_installe")
+to_install = builder.get_object("resultados_avail_ins")
 res_avail = builder.get_object("resultados_availabl")
+results_avail = builder.get_object("resultados_avail")
 
 window.show_all()
 
