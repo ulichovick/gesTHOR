@@ -1,6 +1,7 @@
 import dnf
 import queue
-
+import os
+import subprocess
 my_queue = queue.Queue()
 
 def store_in_queue(f):
@@ -41,5 +42,14 @@ def query_available_packages(filtr):
     print(packages)
     return packages
 
+def install_packages(pkg):
+    os.system(f'pkexec sudo -u root dnf -y install {pkg} ')
+    #subprocess.call(['pkexec',f'sudo dnf install {pkg} -y '])
+    print("installing: ", pkg) 
+    #packages = list(i)  # i only gets evaluated here
+    print("installed dnf packages:")
+    
+    return pkg
+
 if __name__ == "__main__":
-    query_local_packages("neovim")
+    install_packages("screenfetch-3.9.1-8.fc38.noarch")

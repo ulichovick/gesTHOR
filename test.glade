@@ -4,7 +4,7 @@
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkListStore" id="resultados_avail_ins">
     <columns>
-      <!-- column-name package to install -->
+      <!-- column-name package -->
       <column type="gchararray"/>
     </columns>
   </object>
@@ -231,6 +231,7 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <signal name="pressed" handler="Installing_pkgs" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -243,6 +244,17 @@
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinner" id="Instalando">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
               </object>
