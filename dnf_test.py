@@ -1,7 +1,6 @@
 import dnf
 import queue
 import os
-import subprocess
 my_queue = queue.Queue()
 
 def store_in_queue(f):
