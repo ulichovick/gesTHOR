@@ -1,7 +1,9 @@
+#!/usr/bin/sudo /usr/bin/python3
 import dnf
+import dnf.cli
 import queue
 import os
-import subprocess
+
 my_queue = queue.Queue()
 
 def store_in_queue(f):
@@ -25,7 +27,7 @@ def query_local_packages(filtr):
     print(packages)
     return packages
 
-@store_in_queue
+#@store_in_queue
 def query_available_packages(filtr):
     base = dnf.Base()
     base.read_all_repos()
@@ -33,23 +35,42 @@ def query_available_packages(filtr):
     q = base.sack.query()
     i = q.available()
     if filtr:
-        i = i.filter(name=filtr)
+        k = i.filter(name=filtr)
+        j = k.filter(pkg=k)
     else:
-        i = i.filter(name="dnf")   
-    packages = list(i)  # i only gets evaluated here
+        i = i.filter(pkg="dnf")   
+        j = j.filter(pkg=i)
+    packages = list(k)  # i only gets evaluated here
+    packages_2 = list(j)
     print("Available dnf package:")
     r = q.run()
     print(packages)
-    return packages
+    print(packages_2)
+    return packages_2
 
 def install_packages(pkg):
-    os.system(f'pkexec sudo -u root dnf -y install {pkg} ')
-    #subprocess.call(['pkexec',f'sudo dnf install {pkg} -y '])
-    print("installing: ", pkg) 
-    #packages = list(i)  # i only gets evaluated here
-    print("installed dnf packages:")
+    base = dnf.Base()
+    base.conf.read()
+    dnf.cli.demand.DemandSheet
+    base.setup_loggers()
+    base.read_all_repos()
+    base.fill_sack()
+    q = base.sack.query()
+    i = q.filter(name=pkg)
+    packages = list(i)
+    packages_to = []
+    for pkg in packages:
+        packages_to = pkg
+    print("i ", packages_to)
+    #pkg_to_install = base.download_packages(packages_to)
+    print("pkg_to_install", packages_to)
+    base.install(str(packages_to))
+    base.resolve()
+    base.download_packages(base.transaction.install_set)
+    base.do_transaction()
     
     return pkg
 
 if __name__ == "__main__":
-    install_packages("screenfetch-3.9.1-8.fc38.noarch")
+    #pkg_to_install = query_available_packages("screenfetch")
+    install_packages("screenfetch")
