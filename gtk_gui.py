@@ -3,7 +3,6 @@ import subprocess
 import gi
 from threading import Thread
 from dnf_test import query_local_packages, query_available_packages, my_queue
-from dnf_install import install_packages
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib
 
@@ -72,7 +71,6 @@ class Handler:
             label_res_ins.set_text(str("Paquetes instalados exitosamente "+self.pkg_installing))
         except subprocess.CalledProcessError as e:
             print(e.output)
-        print("paquete instalado exitosamente!")
         Instalando_spinner.stop()
         return True
 
