@@ -1,12 +1,8 @@
 import dnf
 import argparse
 
-
 parser = argparse.ArgumentParser()
-
-
 parser.add_argument("-p", "--package")
-
 args = parser.parse_args()
 
 def install_packages():
@@ -19,9 +15,7 @@ def install_packages():
     base.resolve()
     base.download_packages(base.transaction.install_set)
     base.do_transaction()
-    
     return pkg
 
 if __name__ == "__main__":
-    #pkg_to_install = query_available_packages("screenfetch")
     install_packages()

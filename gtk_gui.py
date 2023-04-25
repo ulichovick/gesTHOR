@@ -39,7 +39,6 @@ class Handler:
             res_install.append([str(pkg)])
         installed_spinner.stop()
 
-
     def pressedInstall(self, button):
         to_install_pkg = results_avail.get_selection()
         to_install_pkg.connect('changed', self.on_tree_selection_changed)
@@ -64,8 +63,6 @@ class Handler:
         cwd = os.getcwd()
         cwd = cwd + "/dnf_install.py"
         print("pkgs to be installed: ", self.pkg_installing)
-        #installed = install_packages(self.pkg_installing)
-        #test = os.system(f'pkexec python3 dnf_install.py -p {self.pkg_installing} ')
         try:
             subprocess.call(['pkexec',"sudo", "-u", "root", "python3", cwd, "-p", self.pkg_installing ])
             label_res_ins.set_text(str("Paquetes instalados exitosamente "+self.pkg_installing))
@@ -108,7 +105,6 @@ res_avail = builder.get_object("resultados_availabl")
 results_avail = builder.get_object("resultados_avail")
 pkgs_to_install = builder.get_object("resultados_avail_install")
 label_res_ins = builder.get_object("Resultado Ins")
-
 
 window.show_all()
 

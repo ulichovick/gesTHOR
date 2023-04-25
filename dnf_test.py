@@ -17,9 +17,7 @@ def query_local_packages(filtr):
     print(filtr)
     if filtr:
         i = i.filter(name=filtr)
-    #else:
-    #    i = i.filter(name="dnf")
-    packages = list(i)  # i only gets evaluated here
+    packages = list(i)
     print("Installed dnf package:")
     r = q.run()
     print(packages)
@@ -36,7 +34,7 @@ def query_available_packages(filtr):
         i = i.filter(name=filtr)
     else:
         i = i.filter(name="dnf")   
-    packages = list(i)  # i only gets evaluated here
+    packages = list(i)
     print("Available dnf package:")
     r = q.run()
     print(packages)
@@ -44,4 +42,3 @@ def query_available_packages(filtr):
 
 if __name__ == "__main__":
     pkg_to_install = query_available_packages("screenfetch")
-    
