@@ -1,9 +1,11 @@
+import os
+import subprocess
 import gi
 from threading import Thread
-from dnf_test import query_local_packages, query_available_packages, my_queue, install_packages
+from dnf_test import query_local_packages, query_available_packages, my_queue
+from dnf_install import install_packages
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib
-
 
 class Handler:
     def onDestroy(self, *args):
@@ -55,13 +57,22 @@ class Handler:
 
     def another_spin(self):
         Instalando_spinner.start()
+        label_res_ins.set_text("Instalando")
         return False
 
     def install_in_another_thread(self):
         GLib.idle_add(self.another_spin)
+        cwd = os.getcwd()
+        cwd = cwd + "/dnf_install.py"
         print("pkgs to be installed: ", self.pkg_installing)
-        installed = install_packages(self.pkg_installing)
-        print("paquete instalado exitosamente: ", installed)
+        #installed = install_packages(self.pkg_installing)
+        #test = os.system(f'pkexec python3 dnf_install.py -p {self.pkg_installing} ')
+        try:
+            subprocess.call(['pkexec',"sudo", "-u", "root", "python3", cwd, "-p", self.pkg_installing ])
+            label_res_ins.set_text(str("Paquetes instalados exitosamente "+self.pkg_installing))
+        except subprocess.CalledProcessError as e:
+            print(e.output)
+        print("paquete instalado exitosamente!")
         Instalando_spinner.stop()
         return True
 
@@ -72,9 +83,7 @@ class Handler:
         for path in pathlist :
             tree_iters = model.get_iter(path)
             print("to install", model.get_iter(path))
-            to_install.append([str(model.get_value(tree_iters,0))])
         self.pkg_installing = str(model.get_value(tree_iters,0))
-        print("pkg_to_be_installed",str(self.pkg_installing))
         thread = Thread(target=self.install_in_another_thread)
         thread.daemon = True
         thread.start()
@@ -100,6 +109,7 @@ to_install = builder.get_object("resultados_avail_ins")
 res_avail = builder.get_object("resultados_availabl")
 results_avail = builder.get_object("resultados_avail")
 pkgs_to_install = builder.get_object("resultados_avail_install")
+label_res_ins = builder.get_object("Resultado Ins")
 
 
 window.show_all()
