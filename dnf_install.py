@@ -6,12 +6,13 @@ parser.add_argument("-p", "--package")
 args = parser.parse_args()
 
 def install_packages():
-    pkg = args.package
+    print("PACKAGES: ", args.package)
+    pkg = args.package.split()
     base = dnf.Base()
     base.read_all_repos()
     base.fill_sack()
     print("pkg_to_install", pkg)
-    base.install_specs([pkg])
+    base.install_specs(pkg)
     base.resolve()
     base.download_packages(base.transaction.install_set)
     base.do_transaction()

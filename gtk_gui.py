@@ -39,13 +39,13 @@ class Handler:
             res_install.append([str(pkg)])
         installed_spinner.stop()
 
-    def pressedInstall(self, button):
+    def AddPackages(self, button):
         to_install_pkg = results_avail.get_selection()
         to_install_pkg.connect('changed', self.on_tree_selection_changed)
         (model, pathlist) =  to_install_pkg.get_selected_rows()
         for path in pathlist :
             tree_iter = model.get_iter(path)
-            print("to install", model.get_iter(path))
+            print("to Add", model.get_iter(path))
             to_install.append([str(model.get_value(tree_iter,0))])
 
     def on_tree_selection_changed(self, selection):
@@ -62,10 +62,11 @@ class Handler:
         GLib.idle_add(self.another_spin)
         cwd = os.getcwd()
         cwd = cwd + "/dnf_install.py"
-        print("pkgs to be installed: ", self.pkg_installing)
+        pkgs = ' '.join(self.pkg_to_install)
+        print("pkgs to be installed: ", pkgs)
         try:
-            subprocess.call(['pkexec',"sudo", "-u", "root", "python3", cwd, "-p", self.pkg_installing ])
-            label_res_ins.set_text(str("Paquetes instalados exitosamente "+self.pkg_installing))
+            subprocess.call(['pkexec',"sudo", "-u", "root", "python3", cwd, "--package", pkgs])
+            label_res_ins.set_text(str("Paquetes instalados exitosamente: "+pkgs))
         except subprocess.CalledProcessError as e:
             print(e.output)
         Instalando_spinner.stop()
@@ -74,11 +75,13 @@ class Handler:
     def Installing_pkgs(self, button):
         to_install_pkgs = pkgs_to_install.get_selection()
         to_install_pkgs.connect('changed', self.installing)
+        self.pkg_to_install = []
         (model, pathlist) =  to_install_pkgs.get_selected_rows()
         for path in pathlist :
             tree_iters = model.get_iter(path)
             print("to install", model.get_iter(path))
-        self.pkg_installing = str(model.get_value(tree_iters,0))
+            self.pkg_to_install.append(model.get_value(tree_iters,0))
+        print("package to install", self.pkg_to_install)
         thread = Thread(target=self.install_in_another_thread)
         thread.daemon = True
         thread.start()

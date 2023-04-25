@@ -217,7 +217,7 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
-                        <signal name="pressed" handler="pressedInstall" swapped="no"/>
+                        <signal name="pressed" handler="AddPackages" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">True</property>
