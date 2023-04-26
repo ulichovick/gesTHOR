@@ -111,7 +111,7 @@ class Handler:
             a_desinstalar.append([str(model.get_value(tree_iter,0))])
 
     def uninstall_in_another_thread(self):
-        GLib.idle_add(self.another_spin)
+        GLib.idle_add(self.unins_spin)
         cwd = os.getcwd()
         cwd = cwd + "/dnf_uninstall.py"
         pkgs = ' '.join(self.pkg_to_uninstall)
