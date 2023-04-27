@@ -9,7 +9,7 @@ echo "${workpath}"
 chmod +x "${workpath}"
 touch /usr/share/applications/gesTHOR.desktop
 
-desktopshortcut="[Desktop Entry]\nVersion=0.1.1\nName=Fuck\nComment=Un pequeño instalador/desinstalador de paquetes\nExec=sudo python /opt/gesTHOR/gesTHOR.py\nPath=/opt/gesTHOR/\nTerminal=false\nType=Application\nCatgories=Utility;Application;"
+desktopshortcut="[Desktop Entry]\nVersion=0.1.1\nName=gesTHOR\nComment=Un pequeño instalador/desinstalador de paquetes\nExec=sudo python /opt/gesTHOR/gesTHOR.py\nPath=/opt/gesTHOR/\nTerminal=false\nType=Application\nCatgories=Utility;Application;"
 
-echo -e $desktopshortcut >> /usr/share/applications/GesTHOR.desktop
+echo -e $desktopshortcut >> /usr/share/applications/gesTHOR.desktop
 
