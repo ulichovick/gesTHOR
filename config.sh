@@ -10,7 +10,7 @@ chmod +x "${workpath}"
 touch /usr/share/applications/GesTHOR.desktop
 
 desktopshortcut="[Desktop Entry] \n
-Version=1.1 \n
+Version=0.1.1 \n
 Name=Fuck \n
 Comment=Un pequeño instalador/desinstalador de paquetes \n
 Exec=sudo python /opt/gesTHOR/gesTHOR.py \n
