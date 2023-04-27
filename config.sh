@@ -3,7 +3,7 @@ cp -a . /opt/gesTHOR
 cd /opt/gesTHOR
 workpath=$PWD
 echo "${workpath}"
-mainfilepath=/gesthor.py
+mainfilepath=/gesTHOR.py
 workpath+=$mainfilepath
 echo "${workpath}"
 chmod +x "${workpath}"
@@ -19,5 +19,5 @@ Terminal=false \n
 Type=Application \n
 Categories=Utility;Application; \n "
 
-echo -e $desktopshortcut >> test.txt
+echo -e $desktopshortcut >> /usr/share/applications/GesTHOR.desktop
 
