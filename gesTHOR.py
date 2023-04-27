@@ -1,8 +1,8 @@
-import os
-import subprocess
 import gi
 from threading import Thread
-from dnf_test import query_local_packages, query_available_packages, my_queue
+from src.dnf_query import query_local_packages, query_available_packages, my_queue
+from src.dnf_install import install_packages
+from src.dnf_uninstall import uninstall_packages
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib
 
@@ -51,17 +51,10 @@ class Handler:
 
     def install_in_another_thread(self):
         GLib.idle_add(self.another_spin)
-        cwd = os.getcwd()
-        cwd = cwd + "/dnf_install.py"
-        pkgs = ' '.join(self.pkg_to_install)
-        print("pkgs to be installed: ", pkgs)
-        try:
-            subprocess.call(['pkexec',"sudo", "-u", "root", "python3", cwd, "--package", pkgs])
-            label_res_ins.set_text(str("Paquetes instalados exitosamente: "+pkgs))
-        except subprocess.CalledProcessError as e:
-            print(e.output)
+        installing = install_packages(self.pkg_to_install)
+        label_res_ins.set_text(str(f"Paquetes instalados exitosamente: {self.pkg_to_install}"))
         Instalando_spinner.stop()
-        return True
+        return installing
 
     def Installing_pkgs(self, button):
         to_install_pkgs = pkgs_to_install.get_selection()
@@ -112,17 +105,10 @@ class Handler:
 
     def uninstall_in_another_thread(self):
         GLib.idle_add(self.unins_spin)
-        cwd = os.getcwd()
-        cwd = cwd + "/dnf_uninstall.py"
-        pkgs = ' '.join(self.pkg_to_uninstall)
-        print("pkgs to be installed: ", pkgs)
-        try:
-            subprocess.call(['pkexec', "--user", "root", "sudo", "-u", "root", "python3", cwd, "--package", pkgs])
-            resultado_desins.set_text(str("Paquetes desinstalados exitosamente: "+pkgs))
-        except subprocess.CalledProcessError as e:
-            print(e.output)
+        uninstalling = uninstall_packages(self.pkg_to_uninstall)
+        resultado_desins.set_text(str(f"Paquetes desinstalados exitosamente: {self.pkg_to_uninstall}"))
         desinstalando_spinner.stop()
-        return True
+        return uninstalling
 
     def desinstalar_pkgs(self, button):
         to_uninstall_pkgs = desinstalando.get_selection()
@@ -140,7 +126,7 @@ class Handler:
 
 
 builder = Gtk.Builder()
-builder.add_from_file("test.glade")
+builder.add_from_file("templates/window.glade")
 builder.connect_signals(Handler())
 
 window = builder.get_object("window")

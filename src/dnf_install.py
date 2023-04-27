@@ -1,13 +1,8 @@
 import dnf
-import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-p", "--package")
-args = parser.parse_args()
 
-def install_packages():
-    print("PACKAGES: ", args.package)
-    pkg = args.package.split()
+def install_packages(pkg):
+    pkg = pkg
     base = dnf.Base()
     base.read_all_repos()
     base.fill_sack()
