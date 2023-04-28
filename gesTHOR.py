@@ -56,7 +56,7 @@ class Handler:
         pkgs = ' '.join(self.pkg_to_install)
         print("pkgs to be installed: ", pkgs)
         try:
-            subprocess.call(['pkexec','--disable-internal-agent', "python3", cwd, "--package", pkgs])
+            subprocess.run(['pkexec','--disable-internal-agent', "python3", cwd, "--package", pkgs])
             label_res_ins.set_text(str("Paquetes instalados exitosamente: "+pkgs))
         except subprocess.CalledProcessError as e:
             print(e.output)
@@ -117,7 +117,7 @@ class Handler:
         pkgs = ' '.join(self.pkg_to_uninstall)
         print("pkgs to be installed: ", pkgs)
         try:
-            subprocess.call(['pkexec','--disable-internal-agent', "python3", cwd, "--package", pkgs])
+            subprocess.run(['pkexec','--disable-internal-agent', "python3", cwd, "--package", pkgs])
             resultado_desins.set_text(str("Paquetes desinstalados exitosamente: "+pkgs))
         except subprocess.CalledProcessError as e:
             print(e.output)
