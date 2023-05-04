@@ -12,8 +12,6 @@ def store_in_queue(f):
 def query_local_packages(filtr):
     pkg_name = filtr
     cache = apt.cache.Cache()
-    cache.update()
-    cache.open()
     pkg = cache[pkg_name]
     if pkg.is_installed:
         print(type(pkg))
@@ -26,8 +24,6 @@ def query_available_packages(filtr):
     pkg_name = filtr
 
     cache = apt.cache.Cache()
-    cache.update()
-    cache.open()
 
     try:
         pkg = cache[pkg_name]

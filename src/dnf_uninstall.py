@@ -1,5 +1,4 @@
 import apt
-import apt_pkg
 import argparse
 
 parser = argparse.ArgumentParser()
