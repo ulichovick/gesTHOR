@@ -1,4 +1,4 @@
-import dnf
+import apt
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -7,16 +7,16 @@ args = parser.parse_args()
 
 def install_packages():
     print("PACKAGES: ", args.package)
-    pkg = args.package.split()
-    base = dnf.Base()
-    base.read_all_repos()
-    base.fill_sack()
-    print("pkg_to_install", pkg)
-    base.install_specs(pkg)
-    base.resolve()
-    base.download_packages(base.transaction.install_set)
-    base.do_transaction()
-    return pkg
+    pkgs = args.package.split()
+    cache = apt.cache.Cache()
+    cache.update()
+    cache.open()
+    for pk in pkgs:
+        print("PACKAGE TO INSTALL: ", pk)
+        pkg = cache[pk]
+        pkg.mark_install()
+    cache.commit()
+    return pk
 
 if __name__ == "__main__":
     install_packages()

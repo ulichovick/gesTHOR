@@ -1,4 +1,5 @@
-import dnf
+import apt
+import apt_pkg
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -8,16 +9,15 @@ args = parser.parse_args()
 def uninstall_packages():
     print("PACKAGES: ", args.package)
     pkgs = args.package.split()
-    base = dnf.Base()
-    base.read_all_repos()
-    base.fill_sack()
-    print("pkg_to_remove", pkgs)
-    #base.install_specs(pkg)
-    for pkg in pkgs:
-        base.remove(pkg)
-        base.resolve()
-    base.do_transaction()
-    return pkg
+    cache = apt.cache.Cache()
+    cache.update()
+    cache.open()
+    for pk in pkgs:
+        print("PACKAGE TO REMOVE: ", pk)
+        pkg = cache[pk]
+        pkg.mark_delete()
+    cache.commit()
+    return pkgs
 
 if __name__ == "__main__":
     uninstall_packages()

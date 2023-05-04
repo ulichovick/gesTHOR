@@ -20,8 +20,7 @@ class Handler:
         self.data = query_available_packages(available_filters)
         self.pkgs = my_queue.get()
         available_spinner.stop()
-        for pkg in self.pkgs:
-            res_avail.append([str(pkg)])
+        res_avail.append([str(self.pkgs)])
         return self.data
 
     def onButtonAvailablePressed(self, button):
@@ -97,8 +96,8 @@ class Handler:
         installed_filters = installed_filter.get_text()
         installed_spinner.start()
         installed_data = query_local_packages(installed_filters)
-        for pkg in installed_data:
-            res_install.append([str(pkg)])
+        
+        res_install.append([str(installed_data)])
         installed_spinner.stop()
 
     def add_pkgs_to_uninstall(self, button):
