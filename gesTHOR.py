@@ -144,6 +144,7 @@ builder.add_from_file("templates/window.glade")
 builder.connect_signals(Handler())
 
 window = builder.get_object("window")
+window.set_title("gesTHOR")
 installed_filter = builder.get_object("installed_filter")
 available_filter = builder.get_object("available_filter")
 available_spinner = builder.get_object("available_spinner")
