@@ -21,7 +21,7 @@ class Handler:
         self.pkgs = my_queue.get()
         available_spinner.stop()
         for pkg in self.pkgs:
-            res_avail.append([str(pkg)])
+            res_avail.append([str(pkg), str(pkg.version), str(pkg.description)])
         return self.data
 
     def onButtonAvailablePressed(self, button):
@@ -37,7 +37,7 @@ class Handler:
         for path in pathlist :
             tree_iter = model.get_iter(path)
             print("to Add", model.get_iter(path))
-            to_install.append([str(model.get_value(tree_iter,0))])
+            to_install.append([str(model.get_value(tree_iter,0)), str(model.get_value(tree_iter,1)), str(model.get_value(tree_iter,2))])
 
     def on_tree_selection_changed(self, selection):
         model, treeiter = selection.get_selected()

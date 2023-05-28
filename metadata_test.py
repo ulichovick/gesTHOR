@@ -7,7 +7,7 @@ base.fill_sack()
 
 q = base.sack.query()
 a = q.available()
-a = a.filter(name='nvidia', latest = 1)
+a = a.filter(name='bleachbit', latest = 1)
 
 print("Available dnf packages:")
 for pkg in a:  # a only gets evaluated here
@@ -17,4 +17,3 @@ for pkg in a:  # a only gets evaluated here
     print('Arch {}'.format(pkg.arch))
     print('Version {}'.format(pkg.version))
     print('Description {}'.format(pkg.description))
-    print('FIles {}'.format(pkg.files))
