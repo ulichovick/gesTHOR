@@ -2,7 +2,7 @@ import os
 import subprocess
 import gi
 from threading import Thread
-from dnf_test import query_local_packages, query_available_packages, my_queue
+from src.dnf_query import query_local_packages, query_available_packages, my_queue 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib
 
@@ -52,11 +52,11 @@ class Handler:
     def install_in_another_thread(self):
         GLib.idle_add(self.another_spin)
         cwd = os.getcwd()
-        cwd = cwd + "/dnf_install.py"
+        cwd = cwd + "/src/dnf_install.py"
         pkgs = ' '.join(self.pkg_to_install)
         print("pkgs to be installed: ", pkgs)
         try:
-            subprocess.call(['pkexec', '--disable-internal-agent', "python3", cwd, "--package", pkgs])
+            subprocess.run(['pkexec','--disable-internal-agent', "python3", cwd, "--package", pkgs])
             label_res_ins.set_text(str("Paquetes instalados exitosamente: "+pkgs))
         except subprocess.CalledProcessError as e:
             print(e.output)
@@ -113,11 +113,11 @@ class Handler:
     def uninstall_in_another_thread(self):
         GLib.idle_add(self.unins_spin)
         cwd = os.getcwd()
-        cwd = cwd + "/dnf_uninstall.py"
+        cwd = cwd + "/src/dnf_uninstall.py"
         pkgs = ' '.join(self.pkg_to_uninstall)
         print("pkgs to be installed: ", pkgs)
         try:
-            subprocess.call(['pkexec', '--disable-internal-agent', "python3", cwd, "--package", pkgs])
+            subprocess.run(['pkexec','--disable-internal-agent', "python3", cwd, "--package", pkgs])
             resultado_desins.set_text(str("Paquetes desinstalados exitosamente: "+pkgs))
         except subprocess.CalledProcessError as e:
             print(e.output)
@@ -140,10 +140,11 @@ class Handler:
 
 
 builder = Gtk.Builder()
-builder.add_from_file("test.glade")
+builder.add_from_file("templates/window.glade")
 builder.connect_signals(Handler())
 
 window = builder.get_object("window")
+window.set_title("gesTHOR")
 installed_filter = builder.get_object("installed_filter")
 available_filter = builder.get_object("available_filter")
 available_spinner = builder.get_object("available_spinner")

@@ -20,10 +20,16 @@
       <column type="gchararray"/>
     </columns>
   </object>
+  <object class="GtkListStore" id="resultados_installe">
+    <columns>
+      <!-- column-name Nombre -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkWindow" id="window">
     <property name="can-focus">False</property>
-    <property name="default-width">800</property>
-    <property name="default-height">600</property>
+    <property name="default-width">1600</property>
+    <property name="default-height">1200</property>
     <signal name="destroy" handler="onDestroy" swapped="no"/>
     <child>
       <object class="GtkBox" id="windowbox">
@@ -523,11 +529,5 @@
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkListStore" id="resultados_installe">
-    <columns>
-      <!-- column-name Nombre -->
-      <column type="gchararray"/>
-    </columns>
   </object>
 </interface>
