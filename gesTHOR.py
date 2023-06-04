@@ -98,7 +98,7 @@ class Handler:
         installed_spinner.start()
         installed_data = query_local_packages(installed_filters)
         for pkg in installed_data:
-            res_install.append([str(pkg)])
+            res_install.append([str(pkg), str(pkg.version), str(pkg.description)])
         installed_spinner.stop()
 
     def add_pkgs_to_uninstall(self, button):
@@ -108,7 +108,7 @@ class Handler:
         for path in pathlist :
             tree_iter = model.get_iter(path)
             print("to Add", model.get_iter(path))
-            a_desinstalar.append([str(model.get_value(tree_iter,0))])
+            a_desinstalar.append([str(model.get_value(tree_iter,0)), str(model.get_value(tree_iter,1)), str(model.get_value(tree_iter,2))])
 
     def uninstall_in_another_thread(self):
         GLib.idle_add(self.unins_spin)

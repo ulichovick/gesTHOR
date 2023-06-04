@@ -6,6 +6,10 @@
     <columns>
       <!-- column-name Nombre -->
       <column type="gchararray"/>
+      <!-- column-name Versión -->
+      <column type="gchararray"/>
+      <!-- column-name Descripción -->
+      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkListStore" id="resultados_avail_ins">
@@ -31,6 +35,10 @@
   <object class="GtkListStore" id="resultados_installe">
     <columns>
       <!-- column-name Nombre -->
+      <column type="gchararray"/>
+      <!-- column-name Versión -->
+      <column type="gchararray"/>
+      <!-- column-name Descripción -->
       <column type="gchararray"/>
     </columns>
   </object>
@@ -428,12 +436,14 @@
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="shadow-type">in</property>
+                            <property name="propagate-natural-width">True</property>
                             <child>
                               <object class="GtkTreeView" id="pkgs_instalados">
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="model">resultados_installe</property>
                                 <property name="search-column">0</property>
+                                <property name="enable-grid-lines">both</property>
                                 <child internal-child="selection">
                                   <object class="GtkTreeSelection">
                                     <property name="mode">multiple</property>
@@ -446,6 +456,28 @@
                                       <object class="GtkCellRendererText" id="installed_vals"/>
                                       <attributes>
                                         <attribute name="text">0</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkTreeViewColumn">
+                                    <property name="title" translatable="yes">Versión</property>
+                                    <child>
+                                      <object class="GtkCellRendererText"/>
+                                      <attributes>
+                                        <attribute name="text">1</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkTreeViewColumn">
+                                    <property name="title" translatable="yes">Descripción</property>
+                                    <child>
+                                      <object class="GtkCellRendererText"/>
+                                      <attributes>
+                                        <attribute name="text">2</attribute>
                                       </attributes>
                                     </child>
                                   </object>
@@ -491,17 +523,13 @@
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="shadow-type">in</property>
+                            <property name="propagate-natural-width">True</property>
                             <child>
                               <object class="GtkTreeView" id="pkgs_a_desinstalar">
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="model">pkgs_a_desins</property>
                                 <property name="search-column">0</property>
-                                <child internal-child="selection">
-                                  <object class="GtkTreeSelection">
-                                    <property name="mode">multiple</property>
-                                  </object>
-                                </child>
                                 <child>
                                   <object class="GtkTreeViewColumn" id="uninstalled_package">
                                     <property name="title" translatable="yes">A desinstalar</property>
@@ -509,6 +537,28 @@
                                       <object class="GtkCellRendererText" id="lista_pkgs_a_desinstalar"/>
                                       <attributes>
                                         <attribute name="text">0</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkTreeViewColumn">
+                                    <property name="title" translatable="yes">Versión</property>
+                                    <child>
+                                      <object class="GtkCellRendererText"/>
+                                      <attributes>
+                                        <attribute name="text">1</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkTreeViewColumn">
+                                    <property name="title" translatable="yes">Descripción</property>
+                                    <child>
+                                      <object class="GtkCellRendererText"/>
+                                      <attributes>
+                                        <attribute name="text">2</attribute>
                                       </attributes>
                                     </child>
                                   </object>
