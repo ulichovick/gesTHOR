@@ -6,6 +6,12 @@ parser.add_argument("-p", "--package")
 args = parser.parse_args()
 
 def install_packages():
+    """
+    Instala el/los paquete/s especificado(a través de argumentos de la linea de comandos) usando DNF
+    
+    Returns:
+        str: Una cadena de texto indicando el nombre del/los paquete/s a instalar.
+    """
     print("PACKAGES: ", args.package)
     pkg = args.package.split()
     base = dnf.Base()

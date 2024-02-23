@@ -10,6 +10,15 @@ def store_in_queue(f):
     return wrapper
 
 def query_local_packages(filtr):
+    """
+    Consulta en el sistema el paquete indicado
+
+    Args:
+        filtr (str): Paquete a buscar en el sistema
+    
+    Returns:
+        packages (list): Lista de paquetes que coinciden con la busqueda
+    """
     base = dnf.Base()
     base.fill_sack()
     q = base.sack.query()
@@ -25,6 +34,15 @@ def query_local_packages(filtr):
 
 @store_in_queue
 def query_available_packages(filtr):
+    """
+    Consulta en los repositorios el paquete indicado
+
+    Args:
+        filtr (str): Paquete a buscar en el sistema
+    
+    Returns:
+        packages (list): Lista de paquetes que coinciden con la busqueda
+    """
     base = dnf.Base()
     base.read_all_repos()
     base.fill_sack()

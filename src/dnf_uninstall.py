@@ -6,6 +6,12 @@ parser.add_argument("-p", "--package")
 args = parser.parse_args()
 
 def uninstall_packages():
+    """
+    Desinstala el/los paquete/s especificado(a través de argumentos de la linea de comandos) usando DNF
+    
+    Returns:
+        str: Una cadena de texto indicando el nombre del/los paquete/s a desinstalar.
+    """
     print("PACKAGES: ", args.package)
     pkgs = args.package.split()
     base = dnf.Base()
